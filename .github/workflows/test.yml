@@ -16,3 +16,6 @@ jobs:
           for i in $(seq 1 10); do
             cargo test -- --nocapture
           done
+        env:
+          RUST_BACKTRACE: full
+          RUST_TEST_THREADS: 1
