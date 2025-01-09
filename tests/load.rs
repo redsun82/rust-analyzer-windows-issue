@@ -8,6 +8,7 @@ use std::path::{PathBuf, Path};
 fn lib_dir() -> PathBuf { concat!(env!("CARGO_MANIFEST_DIR"), "/tests/data/lib").into() }
 
 fn load(lib_dir: &Path) {
+    println!("loading {}", lib_dir.display());
     let manifest = lib_dir.join("Cargo.toml");
     let cargo_config = CargoConfig::default();
     let load_cargo_config = LoadCargoConfig {
@@ -15,7 +16,7 @@ fn load(lib_dir: &Path) {
         with_proc_macro_server: ProcMacroServerChoice::None,
         prefill_caches: false,
     };
-    let progress = |s| println!("{}", s);
+    let progress = |s| println!("progress: {}", s);
     let (db, vfs, _) = load_workspace_at(&manifest, &cargo_config, &load_cargo_config, &progress)
         .expect("load_workspace_at");
     let lib_path = Utf8PathBuf::from_path_buf(lib_dir.join("src/lib.rs"))
