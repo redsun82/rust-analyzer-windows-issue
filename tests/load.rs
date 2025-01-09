@@ -40,3 +40,15 @@ fn load_non_canonicalized() {
 fn load_canonicalized() {
 	load(&lib_dir().canonicalize().expect("canonicalize"));
 }
+
+#[test]
+fn load_dunce_canoninicalized() {
+	load(&dunce::canonicalize(&lib_dir()).expect("dunce"));
+}
+
+#[test]
+fn load_double_canoninicalized() {
+	load(&dunce::canonicalize(&lib_dir().canonicalize().expect("canonicalize")).expect("dunce"));
+}
+
+
