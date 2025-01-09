@@ -3,13 +3,11 @@ use ra_ap_load_cargo::{load_workspace_at, LoadCargoConfig, ProcMacroServerChoice
 use ra_ap_paths::{AbsPathBuf, Utf8PathBuf};
 use ra_ap_project_model::CargoConfig;
 use ra_ap_vfs::VfsPath;
-use std::path::PathBuf;
+use std::path::{PathBuf, Path};
 
-#[test]
-fn load() {
-    let lib_dir = PathBuf::from(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/data/lib"))
-        .canonicalize()
-        .expect("canonicalize");
+fn lib_dir() -> PathBuf { concat!(env!("CARGO_MANIFEST_DIR"), "/tests/data/lib").into() }
+
+fn load(lib_dir: &Path) {
     let manifest = lib_dir.join("Cargo.toml");
     let cargo_config = CargoConfig::default();
     let load_cargo_config = LoadCargoConfig {
@@ -30,4 +28,14 @@ fn load() {
         .file_to_module_def(lib_file_id)
         .expect("file_to_module_def");
     _ = module;
+}
+
+#[test]
+fn load_non_canonicalized() {
+	load(&lib_dir());
+}
+
+#[test]
+fn load_canonicalized() {
+	load(&lib_dir().canonicalize().expect("canonicalize"));
 }
