@@ -2,7 +2,7 @@ use std::path::PathBuf;
 use ra_ap_hir::Semantics;
 use ra_ap_load_cargo::{load_workspace_at, LoadCargoConfig, ProcMacroServerChoice};
 use ra_ap_paths::AbsPathBuf;
-use ra_ap_project_model::CargoConfig;
+use ra_ap_project_model::{CargoConfig, RustLibSource};
 use ra_ap_vfs::VfsPath;
 
 #[test]
@@ -10,7 +10,7 @@ fn load() {
     let data_dir = PathBuf::from(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/data"));
     let manifest = data_dir.join("lib/Cargo.toml");
     let cargo_config = CargoConfig{
-
+        sysroot: Some(RustLibSource::Discover),
         ..Default::default()
     };
     let load_cargo_config = LoadCargoConfig {
