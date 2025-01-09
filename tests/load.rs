@@ -1,7 +1,7 @@
 use ra_ap_hir::Semantics;
 use ra_ap_load_cargo::{load_workspace_at, LoadCargoConfig, ProcMacroServerChoice};
 use ra_ap_paths::{AbsPathBuf, Utf8PathBuf};
-use ra_ap_project_model::{CargoConfig, RustLibSource};
+use ra_ap_project_model::CargoConfig;
 use ra_ap_vfs::VfsPath;
 use std::path::PathBuf;
 
@@ -11,13 +11,10 @@ fn load() {
         .canonicalize()
         .expect("canonicalize");
     let manifest = lib_dir.join("Cargo.toml");
-    let cargo_config = CargoConfig {
-        // sysroot: Some(RustLibSource::Discover),
-        ..CargoConfig::default()
-    };
+    let cargo_config = CargoConfig::default();
     let load_cargo_config = LoadCargoConfig {
-        load_out_dirs_from_check: true,
-        with_proc_macro_server: ProcMacroServerChoice::Sysroot,
+        load_out_dirs_from_check: false,
+        with_proc_macro_server: ProcMacroServerChoice::None,
         prefill_caches: false,
     };
     let progress = |s| println!("{}", s);
