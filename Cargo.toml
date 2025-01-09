@@ -1,0 +1,11 @@
+[package]
+name = "rust-analyzer-windows-issue"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ra_ap_hir = "0.0.257"
+ra_ap_load-cargo = "0.0.257"
+ra_ap_paths = "0.0.257"
+ra_ap_project_model = "0.0.257"
+ra_ap_vfs = "0.0.257"
