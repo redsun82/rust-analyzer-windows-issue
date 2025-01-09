@@ -1,0 +1,14 @@
+on:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: run tests multiple times
+        shell: bash
+        run: |
+          for i in $(seq 1 10); do
+            cargo test -- --nocapture
+          done
