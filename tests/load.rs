@@ -9,10 +9,13 @@ use ra_ap_vfs::VfsPath;
 fn load() {
     let data_dir = PathBuf::from(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/data"));
     let manifest = data_dir.join("lib/Cargo.toml");
-    let cargo_config = CargoConfig::default();
+    let cargo_config = CargoConfig{
+
+        ..Default::default()
+    };
     let load_cargo_config = LoadCargoConfig {
         load_out_dirs_from_check: true,
-        with_proc_macro_server: ProcMacroServerChoice::None,
+        with_proc_macro_server: ProcMacroServerChoice::Sysroot,
         prefill_caches: false,
     };
     let progress = |s| println!("{}", s);
